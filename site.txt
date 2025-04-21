@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadeia Produtiva da Soja no RS (2023-2025)</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2E7D32;
+            --accent-color: #8BC34A;
+            --dark-color: #1B5E20;
+            --light-color: #C8E6C9;
+            --text-color: #333;
+            --light-text: #f5f5f5;
+            --background: #f9f9f9;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-color);
+            background-color: var(--background);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+        
+        nav {
+            background-color: var(--dark-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        nav a {
+            color: var(--light-text);
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        nav a:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        h2 {
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 2rem 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 500;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        tr:hover {
+            background-color: var(--light-color);
+        }
+        
+        .info-box {
+            background-color: var(--light-color);
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .quote {
+            font-style: italic;
+            padding: 1rem;
+            border-left: 3px solid var(--secondary-color);
+            background-color: #f5f5f5;
+            margin: 1.5rem 0;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            nav a {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            section {
+                padding: 1.5rem;
+            }
+            
+            .chart-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Cadeia Produtiva da Soja no RS</h1>
+            <p class="subtitle">Análise de produção, logística, custos e mercado (2023-2025)</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <a href="#producao">Produção</a>
+            <a href="#armazenagem">Armazenagem</a>
+            <a href="#logistica">Logística</a>
+            <a href="#precos">Preços e Custos</a>
+            <a href="#desafios">Desafios & Oportunidades</a>
+            <a href="#metodologia">Metodologia</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <section id="producao">
+            <h2>Produção de Soja no RS</h2>
+            
+            <h3>Área Plantada e Produtividade</h3>
+            <div class="chart-container">
+                <canvas id="areaProdutividadeChart"></canvas>
+            </div>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Área Plantada (ha)</h3>
+                    <p>O Rio Grande do Sul tem apresentado crescimento constante na área plantada de soja, com destaque para as regiões do Noroeste e Planalto Médio.</p>
+                </div>
+                <div class="card">
+                    <h3>Produtividade (sc/ha)</h3>
+                    <p>A produtividade varia significativamente conforme as condições climáticas, com recuperação em 2024 após os problemas causados pela La Niña em 2023.</p>
+                </div>
+            </div>
+            
+            <h3>Distribuição Regional da Produção</h3>
+            <div class="chart-container">
+                <canvas id="regioesChart"></canvas>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Região</th>
+                        <th>Participação (2023)</th>
+                        <th>Participação (2024)</th>
+                        <th>Participação (2025 proj.)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Noroeste RS</td>
+                        <td>40%</td>
+                        <td>41%</td>
+                        <td>42%</td>
+                    </tr>
+                    <tr>
+                        <td>Planalto Médio</td>
+                        <td>30%</td>
+                        <td>29%</td>
+                        <td>28%</td>
+                    </tr>
+                    <tr>
+                        <td>Campanha e Fronteira Oeste</td>
+                        <td>20%</td>
+                        <td>20%</td>
+                        <td>20%</td>
+                    </tr>
+                    <tr>
+                        <td>Demais regiões</td>
+                        <td>10%</td>
+                        <td>10%</td>
+                        <td>10%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section id="armazenagem">
+            <h2>Armazenagem e Cerealistas</h2>
+            
+            <h3>Capacidade de Armazenamento</h3>
+            <div class="chart-container">
+                <canvas id="armazenagemChart"></canvas>
+            </div>
+            
+            <div class="info-box">
+                <p><strong>Deficit de armazenagem:</strong> Cerca de 15% da produção precisa ser escoada imediatamente devido à capacidade insuficiente de armazenamento.</p>
+            </div>
+            
+            <h3>Principais Cerealistas</h3>
+            <div class="chart-container">
+                <canvas id="cerealistasChart"></canvas>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cerealista</th>
+                        <th>Capacidade (mil t)</th>
+                        <th>Participação de mercado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Coamo</td>
+                        <td>5.200</td>
+                        <td>21%</td>
+                    </tr>
+                    <tr>
+                        <td>Cotrijal</td>
+                        <td>4.800</td>
+                        <td>19%</td>
+                    </tr>
+                    <tr>
+                        <td>Copercampos</td>
+                        <td>3.500</td>
+                        <td>14%</td>
+                    </tr>
+                    <tr>
+                        <td>C.Vale</td>
+                        <td>3.200</td>
+                        <td>13%</td>
+                    </tr>
+                    <tr>
+                        <td>Fecoagro</td>
+                        <td>2.800</td>
+                        <td>11%</td>
+                    </tr>
+                    <tr>
+                        <td>Outros</td>
+                        <td>5.500</td>
+                        <td>22%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section id="logistica">
+            <h2>Logística de Escoamento</h2>
+            
+            <h3>Custos Comparativos: Rodoviário vs. Ferroviário</h3>
+            <div class="chart-container">
+                <canvas id="logisticaChart"></canvas>
+            </div>
+            
+            <div class="quote">
+                "O modal ferroviário apresenta custos até 40% menores que o rodoviário para o escoamento até o Porto de Rio Grande."
+            </div>
+            
+            <h3>Principais Rotas</h3>
+            <div class="grid">
+                <div class="card">
+                    <h3>Rodoviário</h3>
+                    <p><strong>Principais rodovias:</strong> BR-386, BR-285, BR-158</p>
+                    <p><strong>Custo médio (2024):</strong> R$ 153/ton</p>
+                    <p><strong>Tempo médio:</strong> 8-12 horas</p>
+                </div>
+                <div class="card">
+                    <h3>Ferroviário</h3>
+                    <p><strong>Operadoras:</strong> Rumo, ALL</p>
+                    <p><strong>Custo médio (2024):</strong> R$ 95/ton</p>
+                    <p><strong>Tempo médio:</strong> 24-36 horas</p>
+                </div>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>2023 (R$/ton)</th>
+                        <th>2024 (R$/ton)</th>
+                        <th>2025 (proj. R$/ton)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Frete Rodoviário (médio 300 km)</td>
+                        <td>120</td>
+                        <td>135</td>
+                        <td>145</td>
+                    </tr>
+                    <tr>
+                        <td>Pedágio</td>
+                        <td>15</td>
+                        <td>18</td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Rodoviário</strong></td>
+                        <td><strong>135</strong></td>
+                        <td><strong>153</strong></td>
+                        <td><strong>165</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Frete Ferroviário</td>
+                        <td>90</td>
+                        <td>95</td>
+                        <td>100</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section id="precos">
+            <h2>Preços e Custos de Produção</h2>
+            
+            <h3>Preço Médio da Soja (R$/sc 60kg)</h3>
+            <div class="chart-container">
+                <canvas id="precosChart"></canvas>
+            </div>
+            
+            <h3>Custo de Produção por Hectare</h3>
+            <div class="chart-container">
+                <canvas id="custosChart"></canvas>
+            </div>
+            
+            <div class="info-box">
+                <p><strong>Análise:</strong> O custo de produção subiu 7% em 2024, principalmente devido ao aumento nos preços de defensivos agrícolas, mas os preços de venda se mantêm estáveis pela forte demanda internacional.</p>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Componente</th>
+                        <th>2023 (R$/ha)</th>
+                        <th>2024 (R$/ha)</th>
+                        <th>2025 (proj. R$/ha)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sementes/Defensivos</td>
+                        <td>1.200</td>
+                        <td>1.300</td>
+                        <td>1.400</td>
+                    </tr>
+                    <tr>
+                        <td>Fertilizantes</td>
+                        <td>1.500</td>
+                        <td>1.400</td>
+                        <td>1.450</td>
+                    </tr>
+                    <tr>
+                        <td>Operações/Máquinas</td>
+                        <td>800</td>
+                        <td>850</td>
+                        <td>900</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td><strong>3.500</strong></td>
+                        <td><strong>3.550</strong></td>
+                        <td><strong>3.750</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section id="desafios">
+            <h2>Desafios e Oportunidades</h2>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Desafios</h3>
+                    <ul>
+                        <li><strong>Climáticos:</strong> Excesso de chuvas em 2024 atrasou colheita em 15 dias</li>
+                        <li><strong>Logísticos:</strong> 85% do escoamento depende de rodovias</li>
+                        <li><strong>Armazenagem:</strong> Déficit de 15% na capacidade</li>
+                        <li><strong>Custos:</strong> Aumento de 12% nos insumos em 2024</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Oportunidades</h3>
+                    <ul>
+                        <li><strong>Ferrovias:</strong> Expansão pode reduzir custos em 40% até 2027</li>
+                        <li><strong>Mercado:</strong> Demanda chinesa em alta (+8% em 2024)</li>
+                        <li><strong>Tecnologia:</strong> Agricultura de precisão aumenta produtividade</li>
+                        <li><strong>Bioeconomia:</strong> Crescimento do mercado de biodiesel</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3>Impacto Climático nas Safras</h3>
+            <div class="chart-container">
+                <canvas id="climaChart"></canvas>
+            </div>
+            
+            <div class="quote">
+                "A recuperação da produtividade em 2024 após os problemas climáticos de 2023 demonstra a resiliência do setor, mas a dependência das condições meteorológicas continua sendo um risco importante."
+            </div>
+        </section>
+        
+        <section id="metodologia">
+            <h2>Metodologia e Fontes</h2>
+            
+            <h3>Fontes dos Dados</h3>
+            <ul>
+                <li>CONAB - Companhia Nacional de Abastecimento</li>
+                <li>Emater-RS</li>
+                <li>IBGE - Instituto Brasileiro de Geografia e Estatística</li>
+                <li>ANTT - Agência Nacional de Transportes Terrestres</li>
+                <li>Cepea/Esalq - Centro de Estudos Avançados em Economia Aplicada</li>
+            </ul>
+            
+            <h3>Metodologia de Análise</h3>
+            <p>Os dados foram coletados de fontes oficiais e processados para garantir comparabilidade temporal. As projeções para 2025 consideram tendências históricas e cenários macroeconômicos conservadores.</p>
+            
+            <h3>Contato e Atualizações</h3>
+            <p>Para solicitar dados brutos ou informações adicionais:</p>
+            
+            <form>
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="mensagem">Mensagem:</label>
+                    <textarea id="mensagem" name="mensagem" rows="4" required></textarea>
+                </div>
+                <button type="submit">Enviar Mensagem</button>
+            </form>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Análise da Cadeia Produtiva da Soja no RS</p>
+            <p>Atualizado em abril de 2025</p>
+        </div>
+    </footer>
+
+    <script>
+        // Gráfico 1: Área plantada e produtividade
+        const areaProdutividadeCtx = document.getElementById('areaProdutividadeChart').getContext('2d');
+        const areaProdutividadeChart = new Chart(areaProdutividadeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['2023', '2024', '2025 (proj.)'],
+                datasets: [
+                    {
+                        label: 'Área plantada (mil ha)',
+                        data: [6200, 6400, 6500],
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Produtividade (sc/ha)',
+                        data: [55, 60, 62],
+                        backgroundColor: 'rgba(255, 159, 64, 0.7)',
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        borderWidth: 1,
+                        type: 'line',
+                        yAxisID: 'y1'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Área Plantada e Produtividade da Soja no RS'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: true
+                    }
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: 'Área (mil ha)'
+                        }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: 'Produtividade (sc/ha)'
+                        },
+                        grid: {
+                            drawOnChartArea: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráfico 2: Distribuição regional
+        const regioesCtx = document.getElementById('regioesChart').getContext('2d');
+        const regioesChart = new Chart(regioesCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Noroeste RS', 'Planalto Médio', 'Campanha e Fronteira Oeste', 'Demais regiões'],
+                datasets: [{
+                    data: [40, 30, 20, 10],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(153, 102, 255, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(201, 203, 207, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(201, 203, 207, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Distribuição Regional da Produção de Soja no RS (2023)'
+                    },
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            }
+        });
+
+        // Gráfico 3: Armazenagem
+        const armazenagemCtx = document.getElementById('armazenagemChart').getContext('2d');
+        const armazenagemChart = new Chart(armazenagemCtx, {
+            type: 'bar',
+            data: {
+                labels: ['2023', '2024', '2025 (proj.)'],
+                datasets: [
+                    {
+                        label: 'Produção (mil t)',
+                        data: [20900, 23040, 23870],
+                        backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Capacidade de armazenamento (mil t)',
+                        data: [25000, 25500, 26000],
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Produção x Capacidade de Armazenamento no RS'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: true
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: 'Toneladas (mil)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráfico 4: Cerealistas
+        const cerealistasCtx = document.getElementById('cerealistasChart').getContext('2d');
+        const cerealistasChart = new Chart(cerealistasCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Coamo', 'Cotrijal', 'Copercampos', 'C.Vale', 'Fecoagro', 'Outros'],
+                datasets: [{
+                    data: [21, 19, 14, 13, 11, 22],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(153, 102, 255, 0.7)',
+                        'rgba(201, 203, 207, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(201, 203, 207, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Participação de Mercado dos Principais Cerealistas no RS (2023)'
+                    },
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            }
+        });
+
+        // Gráfico 5: Logística
+        const logisticaCtx = document.getElementById('logisticaChart').getContext('2d');
+        const logisticaChart = new Chart(logisticaCtx, {
+            type: 'bar',
+            data: {
+                labels: ['2023', '2024', '2025 (proj.)'],
+                datasets: [
+                    {
+                        label: 'Rodoviário (R$/t)',
+                        data: [135, 153, 165],
+                        backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Ferroviário (R$/t)',
+                        data: [90, 95, 100],
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Custo de Escoamento até o Porto de Rio Grande'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: true
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Custo (R$/tonelada)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráfico 6: Preços
+        const precosCtx = document.getElementById('precosChart').getContext('2d');
+        const precosChart = new Chart(precosCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan-Mar', 'Abr-Jun', 'Jul-Set', 'Out-Dez'],
+                datasets: [
+                    {
+                        label: '2023',
+                        data: [160, 150, 145, 155],
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.1
+                    },
+                    {
+                        label: '2024',
+                        data: [155, 145, 140, 150],
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.1
+                    },
+                    {
+                        label: '2025 (proj.)',
+                        data: [170, 160, 155, 165],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.1,
+                        borderDash: [5, 5]
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Preço Médio da Soja (R$/sc 60kg)'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: 'Preço (R$/sc)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráfico 7: Custos de produção
+        const custosCtx = document.getElementById('custosChart').getContext('2d');
+        const custosChart = new Chart(custosCtx, {
+            type: 'bar',
+            data: {
+                labels: ['2023', '2024', '2025 (proj.)'],
+                datasets: [
+                    {
+                        label: 'Sementes/Defensivos',
+                        data: [1200, 1300, 1400],
+                        backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Fertilizantes',
+                        data: [1500, 1400, 1450],
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Operações/Máquinas',
+                        data: [800, 850, 900],
+                        backgroundColor: 'rgba(255, 206, 86, 0.7)',
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Custo de Produção por Hectare (R$/ha)'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: true
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: true
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Custo (R$/ha)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráfico 8: Impacto climático
+        const climaCtx = document.getElementById('climaChart').getContext('2d');
+        const climaChart = new Chart(climaCtx, {
+            type: 'line',
+            data: {
+                labels: ['2020', '2021', '2022', '2023', '2024', '2025 (proj.)'],
+                datasets: [
+                    {
+                        label: 'Produtividade (sc/ha)',
+                        data: [58, 62, 60, 55, 60, 62],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                        borderWidth: 2,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Anomalia de precipitação (%)',
+                        data: [-5, 3, -2, -15, 10, 2],
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                        borderWidth: 2,
+                        yAxisID: 'y1'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Relação entre Produtividade e Condições Climáticas'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: true
+                    }
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: 'Produtividade (sc/ha)'
+                        }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: 'Anomalia de precipitação (%)'
+                        },
+                        grid: {
+                            drawOnChartArea: false
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
